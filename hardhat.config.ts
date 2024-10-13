@@ -1,24 +1,7 @@
-import 'hardhat-typechain'
-import '@nomiclabs/hardhat-ethers'
-import '@nomiclabs/hardhat-waffle'
-import '@nomiclabs/hardhat-etherscan'
+require('@nomiclabs/hardhat-waffle')
+require('@nomiclabs/hardhat-ethers')
 
-export default {
-  networks: {
-    hardhat: {
-      allowUnlimitedContractSize: false,
-    },
-    mainnet: {
-      url: `https://mainnet.infura.io/v3/13322e29abd54fd19276fbdef62377f2`,
-    },
-    sepolia: {
-      url: `https://sepolia.infura.io/v3/13322e29abd54fd19276fbdef62377f2`,
-    },
-    polygon: {
-      url: `https://polygon-mainnet.infura.io/v3/13322e29abd54fd19276fbdef62377f2`,
-    },
-  },
-
+module.exports = {
   solidity: {
     version: '0.7.6',
     settings: {
@@ -26,9 +9,12 @@ export default {
         enabled: true,
         runs: 800,
       },
-      metadata: {
-        bytecodeHash: 'none',
-      },
+    },
+  },
+  networks: {
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/13322e29abd54fd19276fbdef62377f2`,
+      accounts: [`cdff9d82ae22635d0f04601ee5bc0454944e9fb95d53c5817a8da3be9715358b`], // Your MetaMask private key
     },
   },
 }
