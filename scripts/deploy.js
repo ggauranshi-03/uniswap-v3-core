@@ -1,67 +1,57 @@
 // const { ethers } = require('hardhat')
-// const readlineSync = require('readline-sync') // Import readline-sync for input
-
 // async function main() {
-//   // Take DEX name and owner address as input from the user
-//   const dexName = readlineSync.question('Enter the name of the DEX: ')
-//   const ownerAddress = readlineSync.question('Enter the owner address: ')
+//   // Fetch the contract to deploy
+//   const UniswapV3Factory = await ethers.getContractFactory('UniswapV3Factory')
 
-//   if (!dexName || !ownerAddress) {
-//     throw new Error('Please provide both a DEX name and an owner address.')
-//   }
+//   // Set constructor parameters
+//   const dexName = 'USARDEX'
+//   const dexOwner = '0x4c8D542573AB022BdB72A4Cc3113b58369Bb9a8E'
 
-//   console.log('Deploying Uniswap contracts with DEX name:', dexName)
-//   console.log('Using custom owner address:', ownerAddress)
+//   // Deploy the contract
+//   console.log('Deploying UniswapV3Factory with the following parameters:')
+//   console.log(`DEX Name: ${dexName}`)
+//   console.log(`DEX Owner: ${dexOwner}`)
 
-//   // Compile and deploy the UniswapV3Factory contract
-//   const Factory = await ethers.getContractFactory('UniswapV3Factory')
-//   const factory = await Factory.deploy(ownerAddress, dexName)
+//   const uniswapV3Factory = await UniswapV3Factory.deploy(dexName, dexOwner)
 
-//   console.log('Uniswap Factory deployed at:', factory.address)
+//   // Wait for the contract to be deployed
+//   await uniswapV3Factory.deployed()
+
+//   console.log('UniswapV3Factory deployed to:', uniswapV3Factory.address)
 // }
 
+// // Execute the deployment script
 // main()
 //   .then(() => process.exit(0))
 //   .catch((error) => {
 //     console.error(error)
 //     process.exit(1)
 //   })
-///////////////////////////////////////////
 const { ethers } = require('hardhat')
-const readlineSync = require('readline-sync') // For input
+const readlineSync = require('readline-sync')
 
 async function main() {
-  // Take DEX name and owner address as input from the user
-  const dexName = readlineSync.question('Enter the name of the DEX: ')
-  const ownerAddress = readlineSync.question('Enter the owner address: ')
+  // Prompt user for DEX name and owner address
+  const dexName = readlineSync.question('Enter DEX Name: ')
+  const dexOwner = readlineSync.question('Enter DEX Owner Address: ')
 
-  if (!dexName || !ownerAddress) {
-    throw new Error('Please provide both a DEX name and an owner address.')
-  }
+  // Fetch the contract to deploy
+  const UniswapV3Factory = await ethers.getContractFactory('UniswapV3Factory')
 
-  // Validate and format the owner address to avoid ENS resolution
-  const formattedOwnerAddress = ethers.utils.getAddress(ownerAddress)
+  // Deploy the contract
+  console.log('Deploying UniswapV3Factory with the following parameters:')
+  console.log(`DEX Name: ${dexName}`)
+  console.log(`DEX Owner: ${dexOwner}`)
 
-  console.log('Deploying Uniswap contracts with DEX name:', dexName)
-  console.log('Using custom owner address:', formattedOwnerAddress)
+  const uniswapV3Factory = await UniswapV3Factory.deploy(dexName, dexOwner)
 
-  // Use getDefaultProvider to automatically select the correct network
-  const provider = ethers.getDefaultProvider('sepolia', {
-    infura: `13322e29abd54fd19276fbdef62377f2`, // Infura Project ID
-  })
+  // Wait for the contract to be deployed
+  await uniswapV3Factory.deployed()
 
-  // Create a signer using the private key and the Infura provider
-  const wallet = new ethers.Wallet(`cdff9d82ae22635d0f04601ee5bc0454944e9fb95d53c5817a8da3be9715358b`, provider)
-
-  console.log('Deploying contracts with the account:', wallet.address)
-
-  // Compile and deploy the UniswapV3Factory contract
-  const Factory = await ethers.getContractFactory('UniswapV3Factory', wallet)
-  const factory = await Factory.deploy(formattedOwnerAddress, dexName)
-
-  console.log('Uniswap Factory deployed at:', factory.address)
+  console.log('UniswapV3Factory deployed to:', uniswapV3Factory.address)
 }
 
+// Execute the deployment script
 main()
   .then(() => process.exit(0))
   .catch((error) => {
