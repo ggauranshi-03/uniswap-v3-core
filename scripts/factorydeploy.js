@@ -36,7 +36,6 @@ async function main() {
   console.log('Deploying UniswapV3Factory with the following parameters:')
   console.log(`DEX Name: ${dexName}`)
   console.log(`DEX Owner: ${dexOwner}`)
-
   const uniswapV3Factory = await UniswapV3Factory.deploy(dexName, dexOwner)
 
   await uniswapV3Factory.deployed()
