@@ -23,8 +23,8 @@ contract UniswapV3Factory is IUniswapV3Factory, UniswapV3PoolDeployer, NoDelegat
     constructor(string memory _dexName, address _dexOwner) {
         dexName = _dexName;
         dexOwner = _dexOwner;
-        owner = msg.sender;
-        emit OwnerChanged(address(0), msg.sender);
+        owner = _dexOwner;
+        emit OwnerChanged(address(0), _dexOwner);
 
         feeAmountTickSpacing[500] = 10;
         emit FeeAmountEnabled(500, 10);
